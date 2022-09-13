@@ -17,7 +17,8 @@ def show_images(examples, n):
 
 # load model
 # Model trained for 10 epochs
-model = load_model('cifar_generator_10epochs.h5')
+MODEL_FILE_NAME = 'cifar_generator_100epochs.h5'
+model = load_model(MODEL_FILE_NAME)
 
 # generate images
 # Latent dim and n_samples
