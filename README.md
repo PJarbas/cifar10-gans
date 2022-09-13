@@ -1,2 +1,2 @@
-# cifar10-gans
+# CIFAR10-image-generation
 Image generation with GANS
