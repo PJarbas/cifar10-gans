@@ -104,6 +104,35 @@ class ModelTrain:
         y = zeros((n_samples, 1))
 
         return x, y
+    
+    def summarize_performance(self, epoch, g_model, d_model, latent_dim, n_samples=150):
+        """ Evaluate the discriminator, plot generated images, save generator model
+
+        Args:
+            epoch (_type_): _description_
+            g_model (_type_): _description_
+            d_model (_type_): _description_
+            latent_dim (_type_): _description_
+            n_samples (int, optional): _description_. Defaults to 150.
+        """
+        # prepare real samples
+        X_real, y_real = self.generate_real_samples(n_samples)
+        
+        # evaluate discriminator on real examples
+        _, acc_real = d_model.evaluate(X_real, y_real, verbose=0)
+        
+        # prepare fake examples
+        x_fake, y_fake = self.generate_fake_samples(g_model, latent_dim, n_samples)
+        
+        # evaluate discriminator on fake examples
+        _, acc_fake = d_model.evaluate(x_fake, y_fake, verbose=0)
+        
+        # summarize discriminator performance
+        print('>Accuracy real: %.0f%%, fake: %.0f%%' % (acc_real*100, acc_fake*100))
+        
+        # save the generator model tile file
+        filename = 'generator_model_%03d.h5' % (epoch+1)
+        g_model.save(filename)
 
     def run(self, latent_dim=100, lr=0.0002, beta_1=0.5,
             n_nodes = 128 * 8 * 8, n_epochs=10, n_batch=128,
@@ -186,9 +215,10 @@ class ModelTrain:
                 # Print losses on this batch
                 print('Epoch>%d, Batch %d/%d, d1=%.3f, d2=%.3f g=%.3f' %
                       (i+1, j+1, bat_per_epo, d_loss_real, d_loss_fake, g_loss))
-                
-        # save the generator model
-        generator.save(f"cifar_generator_{n_epochs}epochs.h5")
+        
+        # evaluate the model performance, sometimes
+        if (i+1) % 10 == 0:
+            self.summarize_performance(i, generator, discriminator, latent_dim)
 
 
 if __name__ == "__main__":
