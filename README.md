@@ -19,3 +19,7 @@ run the main script using the following command in the `src` directory:
 ```bash
    $ python main.py 
 ```
+
+### Results with 250 epochs of training
+
+[results](src/cifar10-250ep.png)

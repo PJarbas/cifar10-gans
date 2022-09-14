@@ -16,8 +16,8 @@ def show_images(examples, n):
     plt.show()
 
 # load model
-# Model trained for 10 epochs
-MODEL_FILE_NAME = 'cifar_generator_100epochs.h5'
+# Model trained for 250 epochs
+MODEL_FILE_NAME = 'generator_model_250.h5'
 model = load_model(MODEL_FILE_NAME)
 
 # generate images

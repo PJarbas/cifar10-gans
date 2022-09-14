@@ -37,7 +37,7 @@ class GAN:
         model.add(Conv2D(128, (3,3), strides=(2,2), padding='same'))
         model.add(LeakyReLU(alpha=0.2))      
         model.add(Flatten())
-        model.add(Dropout(0.4))
+        model.add(Dropout(0.1))
         model.add(Dense(1, activation='sigmoid'))
         
         # compile model
@@ -76,7 +76,7 @@ class GAN:
         model.add(Conv2D(3, (8,8), activation='tanh', padding='same'))
         return model
 
-    def build_gan(self, generator, discriminator, lr=0.0002, beta_1=0.5, loss='binary_crossentropy'):
+    def build_gan(self, generator, discriminator, lr=0.01, beta_1=0.5, loss='binary_crossentropy'):
         
         """ Define the combined generator and discriminator model, for updating the generator
             Discriminator is trained separately so here only generator will be trained by keeping
