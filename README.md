@@ -21,5 +21,5 @@ run the main script using the following command in the `src` directory:
 ```
 
 ### Results with 250 epochs of training
-
-[results](src/cifar10-250ep.png)
+    
+![](src/cifar10-250ep.png)
